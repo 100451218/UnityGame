@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: e2200a2b69d267341a6e498098041b10
+  - enabled: 0
+    path: Assets/Saving/1.unity
+    guid: 635f5b62c025d1d499cae87fafde6fd3
+  - enabled: 0
+    path: Assets/Saving/2.unity
+    guid: f93c74cfd844ac64cb68a682a40ee0fa
+  - enabled: 0
+    path: Assets/MenuScene/Main.unity
+    guid: 52f01604ee0d46949942f968720a16c3
+  - enabled: 1
+    path: Assets/MainScene/MainScene.unity
+    guid: 7c948a76109113d4388d7032c37741e6
+  - enabled: 0
+    path: Assets/KKSpeechRecognizer/Example/ExampleScene.unity
+    guid: 1a1e869bff86843f48395c9dc3c133e8
+  - enabled: 0
+    path: Assets/SpeechTrial/SpeechTrail.unity
+    guid: 77c57cc8ff6d6204fa19fbdfe87f3854
+  m_configObjects: {}
