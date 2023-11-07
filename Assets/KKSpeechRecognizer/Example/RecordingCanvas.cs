@@ -8,8 +8,10 @@ public class RecordingCanvas : MonoBehaviour
   //public Button startRecordingButton;
   public Text resultText;
   private float waiter=0f;
+  CommanderScript voice_control;
   void Start()
   {
+    voice_control=FindObjectOfType<CommanderScript>();
     if (SpeechRecognizer.ExistsOnDevice())
     {
       SpeechRecognizerListener listener = GameObject.FindObjectOfType<SpeechRecognizerListener>();
@@ -34,24 +36,31 @@ public class RecordingCanvas : MonoBehaviour
 
   void Update(){
     //OnStartRecordingPressed();
-    OnContinuousRecording();
+    if (Vector3.Dot(this.transform.forward, Vector3.down)>0.85)
+    {
+      //Vector3.Dot is near 1 when the two vectors are similar
+      //Therefore, when we look down, we get the Recording
+      OnContinuousRecording();
+    }
+    
   }
 
   public void OnFinalResult(string result)
   {
     //startRecordingButton.GetComponentInChildren<Text>().text = "Start Recording";
     resultText.text = result;
-    Debug.Log(result);
+    
+    VoiceCommand(result);
     //startRecordingButton.enabled = true;
   }
 
   public void OnPartialResult(string result)
   {
     resultText.text = result;
-    Debug.Log(result);
+
   }
 
-  public void OnAvailabilityChange(bool available)
+  public void OnAvailabilityChange(bool available)  
   {
     //startRecordingButton.enabled = available;
     if (!available)
@@ -94,20 +103,17 @@ public class RecordingCanvas : MonoBehaviour
   {
     if (SpeechRecognizer.IsRecording())
     {
-      Debug.Log("Recording");
 #if UNITY_IOS && !UNITY_EDITOR
 			SpeechRecognizer.StopIfRecording();
 			//startRecordingButton.GetComponentInChildren<Text>().text = "Stopping";
 			//startRecordingButton.enabled = false;
 #elif UNITY_ANDROID && !UNITY_EDITOR
-      Debug.Log("It is an android and is stoping because we pressed");
 			SpeechRecognizer.StopIfRecording();
 			//startRecordingButton.GetComponentInChildren<Text>().text = "Start Recording";
 #endif
     }
     else
     {
-      Debug.Log("Else case");
       SpeechRecognizer.StartRecording(true);
       //startRecordingButton.GetComponentInChildren<Text>().text = "Stop Recording";
       resultText.text = "Say something :-)";
@@ -126,6 +132,34 @@ public class RecordingCanvas : MonoBehaviour
     }
     
   }
-
+  void VoiceCommand(string result){
+    switch (result){
+      case "camera zero":
+        voice_control.SwitchMainCamera();
+        break;
+      case "camera one":
+        Debug.Log("Si");
+        voice_control.SwitchTimCamera();
+        break;
+      case "camera two":
+        voice_control.SwitchBobCamera();
+        break;
+      case "camera three":
+        voice_control.SwitchSamCamera();
+        break;
+      case "camera four":
+        voice_control.SwitchUAVCamera();
+        break;
+      case "Timmy move here":
+        voice_control.SwitchUAVCamera();
+        break;
+      case "":
+        voice_control.SwitchUAVCamera();
+        break;
+      default:
+        Debug.Log("Command not in the options");
+        break;
+    }
+  }
 
 }
