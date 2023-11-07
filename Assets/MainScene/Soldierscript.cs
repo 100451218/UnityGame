@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 public interface IState
 {
     void OnEnter();
     void UpdateState();
     void OnExit();
 }
+
 
 
 public class ObserveState : IState
@@ -19,7 +23,15 @@ public class ObserveState : IState
     public void UpdateState()
     {
         // "I will check if I see enemies and reload if needed"
-
+        (target, target_distance)=ClosestEnemy();
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, defaultLook   , 1.0f*Time.deltaTime, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDirection);
+        if (target_distance<lookrange){
+            ChangeState(aim_state);
+        }
+        if (current_bullets<max_bullets_cappacity){
+            ChangeState(reload_state);
+        }
     }
     public void OnExit()
     {
@@ -36,7 +48,20 @@ public class AimState : IState
     public void UpdateState()
     {
         // "The enemy is moving, I'll keep watching him"
+        (target, target_distance)=ClosestEnemy();
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, target.transform.position, 1.0f*Time.deltaTime, 10.0f);
+        newDirection.y=0f;
+        transform.rotation = Quaternion.LookRotation(newDirection);
+        
+        //transform.LookAt(target.transform);
 
+        //var rotation = Quaternion.LookRotation(target.transform.position - transform.position);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 5);
+
+        target.GetComponent<MeshRenderer>().material = looked;
+        if (target_distance<shootrange){
+            ChangeState(shoot_state);
+        }
     }
     public void OnExit()
     {
@@ -62,11 +87,12 @@ public class ShootState : IState
 }
 
 
-public class reloadState : IState
+public class ReloadState : IState
 {
     public void OnEnter()
     {
         // "Reloading!"
+        ChangeState(observe_state);
     }
     public void UpdateState()
     {
@@ -99,25 +125,45 @@ public class MoveState : IState
 
 public class Soldierscript : MonoBehaviour
 {
-
-
+    public void ChangeState(IState newState)
+    {
+        if (currentState!= null){
+            currentState.OnExit();
+        }
+        currentState = newState;
+        currentState.OnEnter();
+    }
+    // state machine variables
     IState currentState;
+    public ObserveState observe_state= new ObserveState();
+    public AimState aim_state = new AimState();
+    public ShootState shoot_state = new ShootState();
+    public ReloadState reload_state = new ReloadState();
+    public MoveState move_state = new MoveState();
 
-
+    // in game values
     public float lookrange = 1000f;
     public float shootrange = 400f;
+    public int max_bullets_cappacity = 5;
     public Material looked;
+    
+
+    // axuiliar variables
     Renderer Enemie_Renderer;
     GameObject target;
     float target_distance;
     private Vector3 defaultLook;
     void Start(){
         defaultLook= transform.forward;
+        ChangeState(observe_state);
     }
     void Update()
-    {
-        currentState.UpdateState();
-
+    {   
+        if (currentState!= null){
+            currentState.UpdateState();
+        }
+        
+        /*
         (target, target_distance)=ClosestEnemy();
         if (target_distance<lookrange){
             
@@ -140,20 +186,14 @@ public class Soldierscript : MonoBehaviour
         //Too close, shoot
             Shoot();
         }
-        
+        */
     }
 
 
 
 
 
-    public void ChangeState(IState newState)
-    {
-        currentState.OnExit();
-        currentState = newState;
-        currentState.OnEnter();
-    }
-
+   
     (GameObject, float) ClosestEnemy(){
         GameObject[] enemies;
         enemies=GameObject.FindGameObjectsWithTag("Enemie");
