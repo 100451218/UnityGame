@@ -26,7 +26,6 @@ public class RecordingCanvas : MonoBehaviour
     }
     else
     {
-      Debug.Log("Error device has no speech recognizer");
       resultText.text = "Sorry, but this device doesn't support speech recognition";
       //startRecordingButton.enabled = false;
     }
@@ -94,7 +93,6 @@ public class RecordingCanvas : MonoBehaviour
 
   public void OnError(string error)
   {
-    Debug.LogError(error);
     //startRecordingButton.GetComponentInChildren<Text>().text = "Start Recording";
     //startRecordingButton.enabled = true;
   }
