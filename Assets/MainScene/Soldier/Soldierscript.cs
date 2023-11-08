@@ -6,9 +6,11 @@ public class Soldierscript : MonoBehaviour
 {
     public float lookrange = 1000f;
     public float shootrange = 400f;
+    public float shootsound = 2000f;
     public Material looked;
     Renderer Enemie_Renderer;
     GameObject target;
+    EnemieScript enemie_script;
     float target_distance;
     private Vector3 defaultLook;
     void Start(){
@@ -68,6 +70,19 @@ public class Soldierscript : MonoBehaviour
     }
     void Shoot()
     {
+        //We need to make the sound of a shooting
+        
+        GameObject[] all_zombies;
+        all_zombies = GameObject.FindGameObjectsWithTag("Enemie");
+        foreach ( GameObject zombi in all_zombies){
+            if (Vector3.Distance(zombi.transform.position, gameObject.transform.position)<1000){
+                //if the zombi is close enough
+                enemie_script=zombi.GetComponent<EnemieScript>();
+                enemie_script.Investigate(gameObject.transform.position);
+            }
+        }
+
+
         //transform.LookAt(target.transform);
         //Transform.RotateTowards would be
         RaycastHit hitInfo;

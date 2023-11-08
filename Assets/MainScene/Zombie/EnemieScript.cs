@@ -6,24 +6,52 @@ using UnityEngine.AI;
 public class EnemieScript : MonoBehaviour
 {
     GameObject commander;
+    NavMeshAgent agent;
+    GameObject[] civilians;
     // Start is called before the first frame update
     void Start()
     {
+        //Only if he hears something
         commander = GameObject.FindWithTag("Player");
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-        agent.destination= commander.transform.position;
+        agent = GetComponent<NavMeshAgent>();
+        //agent.destination= commander.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
-        Quaternion targetRotation = Quaternion.LookRotation(commander.transform.position - transform.position);
-        //Get the commander position and look that way
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 1 * Time.deltaTime);
-        //Changes where it is looking at every frame between its current look and where the commander is
-        transform.position += transform.forward * 1f * Time.deltaTime;
-        //move towards where it is looking, ideally it is where the player is
-        */
+        // We need to check if the zombi sees a commander or a civilian
+        float distance= 10000000000000000000;
+        GameObject target_civilian = null;
+        //The zombi will go to the closest civilian he sees
+        civilians=GameObject.FindGameObjectsWithTag("Civilian");
+        if (civilians!= null){
+            foreach(GameObject civilian in civilians){
+                Vector3 direction = gameObject.transform.position- civilian.transform.position;
+                float angle= Vector3.Angle(direction, gameObject.transform.forward);
+                if (angle < 45){
+                    //if he sees him
+                    Vector3 enemie_distance = civilian.transform.position - gameObject.transform.position;
+                    float currentDistance = enemie_distance.sqrMagnitude;
+                    if (currentDistance<distance && currentDistance<3000){
+                        target_civilian= civilian;
+                        distance=currentDistance;
+                    }           
+                }
+            }
+        }
+        if (target_civilian != null){
+            agent.destination= target_civilian.transform.position;
+        }
+        
+    }
+
+    public void Investigate(Vector3 position){
+        Debug.Log("Zombi heard something");
+        agent.destination = position;
+    }
+    public void Chase(NavMeshAgent chased){
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        agent.destination= commander.transform.position;
     }
 }

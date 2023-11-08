@@ -893,6 +893,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToSpawn: {fileID: 1521814606121918429, guid: a611c2b985a150e4e8bfc9fc8ae33389,
     type: 3}
+  probability: 20
   soldiers_position: []
 --- !u!4 &636082922
 Transform:

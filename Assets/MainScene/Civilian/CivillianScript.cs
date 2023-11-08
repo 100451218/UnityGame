@@ -16,7 +16,6 @@ public class CivillianScript : MonoBehaviour
     void Update()
     {
         time_left=time_left-Time.deltaTime;
-        Debug.Log(time_left);
         if (time_left<=0){
             Destroy(gameObject);
         }

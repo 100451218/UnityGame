@@ -6,6 +6,7 @@ public class CivilianSpawnerScript : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject objectToSpawn;
+    public int probability=1000;
     private float x,z;
     private int selection;
     private int spawnpoints_count;
@@ -28,8 +29,9 @@ public class CivilianSpawnerScript : MonoBehaviour
     void FixedUpdate()
     {
         //we used fixed update because we want the script to run every fixed ammount of seconds, not every frame
-        if (Random.Range(1, 10)==3){
-            //Debug.Log("Spawn");
+        if (Random.Range(1, probability)==3){
+
+            Debug.Log("Spawn");
             can_spawn= true;
             selection=Random.Range(0, spawnpoints_count);
             foreach (GameObject soldier in soldiers_position){
