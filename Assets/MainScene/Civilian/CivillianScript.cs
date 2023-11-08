@@ -9,7 +9,7 @@ public class CivillianScript : MonoBehaviour
     void Start()
     {
         time_left = Random.Range(30f, 90f);
-        Debug.Log(time_left);
+        //Debug.Log(time_left);
     }
 
     // Update is called once per frame

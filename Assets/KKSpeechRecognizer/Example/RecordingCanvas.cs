@@ -124,7 +124,7 @@ public class RecordingCanvas : MonoBehaviour
   {
     if (!SpeechRecognizer.IsRecording())
     {
-      Debug.Log("Not recording");
+      //Debug.Log("Not recording");
       SpeechRecognizer.StartRecording(true);
       resultText.text = "Taking notes!";
     }
@@ -136,7 +136,7 @@ public class RecordingCanvas : MonoBehaviour
         voice_control.SwitchMainCamera();
         break;
       case "camera one":
-        Debug.Log("Si");
+        //Debug.Log("Si");
         voice_control.SwitchTimCamera();
         break;
       case "camera two":
@@ -148,14 +148,14 @@ public class RecordingCanvas : MonoBehaviour
       case "camera four":
         voice_control.SwitchUAVCamera();
         break;
-      case "Timmy move here":
-        voice_control.SwitchUAVCamera();
+      case "Timmy move":
+        voice_control.MoveSoldier("Tim");
         break;
       case "":
         voice_control.SwitchUAVCamera();
         break;
       default:
-        Debug.Log("Command not in the options");
+        //Debug.Log("Command not in the options");
         break;
     }
   }

@@ -21,7 +21,7 @@ public class CivilianSpawnerScript : MonoBehaviour
         for(int i = 0; i < spawnpoints_count; i++){
             spawnpoints[i]= transform.GetChild(i);
         }
-        Debug.Log(spawnpoints);
+        //Debug.Log(spawnpoints);
         soldiers_position = GameObject.FindGameObjectsWithTag("Allie");
     }
 
@@ -31,7 +31,7 @@ public class CivilianSpawnerScript : MonoBehaviour
         //we used fixed update because we want the script to run every fixed ammount of seconds, not every frame
         if (Random.Range(1, probability)==3){
 
-            Debug.Log("Spawn");
+            //Debug.Log("Spawn");
             can_spawn= true;
             selection=Random.Range(0, spawnpoints_count);
             foreach (GameObject soldier in soldiers_position){

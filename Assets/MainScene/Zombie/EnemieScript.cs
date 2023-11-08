@@ -33,7 +33,7 @@ public class EnemieScript : MonoBehaviour
                     //if he sees him
                     Vector3 enemie_distance = civilian.transform.position - gameObject.transform.position;
                     float currentDistance = enemie_distance.sqrMagnitude;
-                    if (currentDistance<distance && currentDistance<3000){
+                    if (currentDistance<distance && currentDistance<15000){
                         target_civilian= civilian;
                         distance=currentDistance;
                     }           
