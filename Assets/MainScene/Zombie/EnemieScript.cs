@@ -42,6 +42,8 @@ public class EnemieScript : MonoBehaviour
         }
         if (target_civilian != null){
             agent.destination= target_civilian.transform.position;
+        } else{
+            agent.destination = commander.transform.position;
         }
         
     }
