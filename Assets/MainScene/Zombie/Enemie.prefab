@@ -106,6 +106,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d263057d94de5e4b9bd465cec04d205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visionrange: 692
+  chasing_mat: {fileID: 2100000, guid: 6a470e3a4d86472499cd95341dd36886, type: 2}
+  idle_mat: {fileID: 2100000, guid: 2de91356d87e48048a65f3e3142d7da1, type: 2}
+  investigate_mat: {fileID: 2100000, guid: dbb1b9fa9d30cb44499f750aa977f47a, type: 2}
+  agent: {fileID: 0}
+  objective: {fileID: 0}
 --- !u!195 &-4330848745230146901
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemieSpawnerScript : MonoBehaviour
 {
     public GameObject objectToSpawn;
+    public int probability=200;
     private float x,z;
     private int selection;
     private int spawnpoints_count;
@@ -23,7 +24,7 @@ public class EnemieSpawnerScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Random.Range(1, 200)==3){
+        if (Random.Range(1, probability)==3){
             //Debug.Log("Spawn");
             selection=Random.Range(0, spawnpoints_count);
             x= spawnpoints[selection].position.x +Random.Range(-10, 10);
