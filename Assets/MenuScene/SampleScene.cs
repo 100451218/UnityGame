@@ -35,6 +35,20 @@ public class SampleScene : MonoBehaviour
             counter=0;
         }
         
-        if (counter>1.5){GetComponent<Renderer>().material.color = Color.black;}
+        if (counter>1.5){
+            GetComponent<Renderer>().material.color = Color.black;
+            switch (this.gameObject.name)
+            {
+                case "PlayButton":
+                    PlayButton();   
+                    break;
+            }
+            
+        }
+    }
+
+    void PlayButton(){
+        Debug.Log("Play");
+        SceneManager.LoadScene(sceneName: "MainScene");
     }
 }
