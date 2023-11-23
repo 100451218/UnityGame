@@ -157,6 +157,9 @@ public class RecordingCanvas : MonoBehaviour
       case "Sam come here":
         voice_control.MoveSoldier("Sam");
         break;
+      case "walk":
+        voice_control.Move();
+        break;
       default:
         //Debug.Log("Command not in the options");
         break;

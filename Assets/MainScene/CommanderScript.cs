@@ -60,7 +60,15 @@ public class CommanderScript : MonoBehaviour
         soldier.GetComponent<Soldierscript>().follow=!soldier.GetComponent<Soldierscript>().follow;
     }
 
-    
+    public void Move()
+    {
+        //work in progress
+        RaycastHit hitInfo;
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, 10000))
+        {   
+            Debug.Log(hitInfo.transform.name + hitInfo.transform.position);
+        }
+    }
 
 
 
