@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+
+/// <summary>
+/// Only left that the soldier shoots while it follows and that it actually goes a bit behind so that its not all the time colliding.
+/// Left to check if I should put the reading of follow and the change states in the Patrol/FollowState instead of the script update
+/// No estoy seguro de que termine de funcionar la vuelta al punto mas cercano pero bueno que se le va a hacer
+/// 
+/// </summary>
 public interface IState
 {
     void OnEnter();
@@ -40,6 +48,25 @@ public class Model : IState
 }
 
 
+public class FollowState : IState
+{
+    Soldierscript owner;
+    //We get the soldier that is calling this state
+    public FollowState(Soldierscript owner) { this.owner = owner;}
+
+    public void OnEnter(){
+        owner.current_state=owner.follow_state;
+        owner.agent.destination=GameObject.Find("Commander").transform.position;
+        owner.statemachine.ChangeState(owner.observe_state);
+    }
+    public void UpdateState()
+    {
+        
+    }
+    public void OnExit(){}
+}
+
+
 public class PatrolState : IState
 {
     Soldierscript owner;
@@ -52,6 +79,7 @@ public class PatrolState : IState
     int patrol_counter=0;
     public void OnEnter()
     {
+        owner.current_state=owner.patrol_state;
         positioning=false;
         rotating= false;
         //first we get all the spawn points
@@ -148,7 +176,7 @@ public class ObserveState : IState
             } else 
             {
                 //if there is no threat we need to look another street
-                owner.statemachine.ChangeState(owner.patrol_state);    
+                owner.statemachine.ChangeState(owner.current_state);    
             } 
         } 
         
@@ -266,6 +294,7 @@ public class Soldierscript : MonoBehaviour
     public ShootState shoot_state;
     public ReloadState reload_state;
     public PatrolState patrol_state;
+    public FollowState follow_state;
 
 
 
@@ -273,9 +302,10 @@ public class Soldierscript : MonoBehaviour
     public float shootrange = 400f;
     public int max_bullets_cappacity = 5;
     public NavMeshAgent agent;
-
+    public bool follow=false;
 
     public int current_bullets;
+    public IState current_state;
     public Material looked;
     
 
@@ -294,6 +324,7 @@ public class Soldierscript : MonoBehaviour
         shoot_state = new ShootState(this);
         reload_state = new ReloadState(this);
         patrol_state = new PatrolState(this);
+        follow_state = new FollowState(this);
         statemachine.ChangeState(patrol_state);
     }
     void Update()
@@ -324,6 +355,12 @@ public class Soldierscript : MonoBehaviour
             Shoot();
         }
         */
+        if (follow==true){
+            //We change the current status
+            statemachine.ChangeState(follow_state);
+        } else {
+            statemachine.ChangeState(patrol_state);
+        }
     }
 
 

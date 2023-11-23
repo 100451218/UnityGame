@@ -57,19 +57,10 @@ public class CommanderScript : MonoBehaviour
     public void MoveSoldier(string soldier_name){
         GameObject soldier = GameObject.Find(soldier_name);
         Debug.Log(soldier);
-        Camera observing_point = Camera.main;
-        Debug.Log(observing_point);
-        RaycastHit hitInfo;
-        if (Physics.Raycast(observing_point.transform.position, observing_point.transform.forward, out hitInfo, 10000000))
-        {
-            Debug.Log("FindPoint");
-            Debug.Log(hitInfo.transform.position);
-            Debug.Log(hitInfo.point);
-            if (hitInfo.transform.gameObject.name=="Floor"){
-                //get all objects that are possible soldier position and move the soldier to the closest one of where it got marked if it is free.
-            }
-        }
+        soldier.GetComponent<Soldierscript>().follow=!soldier.GetComponent<Soldierscript>().follow;
     }
+
+    
 
 
 

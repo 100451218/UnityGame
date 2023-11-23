@@ -148,11 +148,14 @@ public class RecordingCanvas : MonoBehaviour
       case "camera four":
         voice_control.SwitchUAVCamera();
         break;
-      case "Timmy move":
+      case "Timmy":
         voice_control.MoveSoldier("Tim");
         break;
-      case "":
-        voice_control.SwitchUAVCamera();
+      case "Bobby come here":
+        voice_control.MoveSoldier("Bob");
+        break;
+      case "Sam come here":
+        voice_control.MoveSoldier("Sam");
         break;
       default:
         //Debug.Log("Command not in the options");
