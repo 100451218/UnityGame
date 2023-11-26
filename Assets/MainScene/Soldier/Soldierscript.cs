@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 
 /// <summary>
-/// Only left that the soldier shoots while it follows and that it actually goes a bit behind so that its not all the time colliding.
+/// Only left that the soldier shoots while it follows and that it actually goes a bit behind (DONE) so that its not all the time colliding.
 /// Left to check if I should put the reading of follow and the change states in the Patrol/FollowState instead of the script update
 /// No estoy seguro de que termine de funcionar la vuelta al punto mas cercano pero bueno que se le va a hacer
 /// 
@@ -55,6 +55,7 @@ public class FollowState : IState
     public FollowState(Soldierscript owner) { this.owner = owner;}
 
     public void OnEnter(){
+        owner.agent.stoppingDistance=2;
         owner.current_state=owner.follow_state;
         owner.agent.destination=GameObject.Find("Commander").transform.position;
         owner.statemachine.ChangeState(owner.observe_state);
@@ -63,7 +64,9 @@ public class FollowState : IState
     {
         
     }
-    public void OnExit(){}
+    public void OnExit(){
+        
+    }
 }
 
 
@@ -80,6 +83,7 @@ public class PatrolState : IState
     public void OnEnter()
     {
         owner.current_state=owner.patrol_state;
+        owner.agent.stoppingDistance=0;
         positioning=false;
         rotating= false;
         //first we get all the spawn points

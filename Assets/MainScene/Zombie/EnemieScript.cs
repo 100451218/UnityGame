@@ -115,6 +115,10 @@ public class EnemieScript : MonoBehaviour
         statemachine.ChangeState(new IDLEState(this));
         //agent.destination= commander.transform.position;
     }
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Entered collision with " + collision.gameObject.name);
+    }
 
     // Update is called once per frame
     void Update()
