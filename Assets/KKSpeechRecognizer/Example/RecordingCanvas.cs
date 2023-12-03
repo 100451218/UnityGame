@@ -158,6 +158,7 @@ public class RecordingCanvas : MonoBehaviour
         voice_control.MoveSoldier("Sam");
         break;
       case "walk":
+      case "move":
         voice_control.Move();
         break;
       default:

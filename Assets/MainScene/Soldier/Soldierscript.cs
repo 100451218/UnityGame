@@ -20,7 +20,7 @@ public interface IState
 
 public class StateMachine
 {
-    IState currentState;
+    public IState currentState;
     public void ChangeState(IState newState)
     {
         if (currentState != null){
@@ -82,6 +82,7 @@ public class PatrolState : IState
     int patrol_counter=0;
     public void OnEnter()
     {
+        Debug.Log("Patrol state entered"+owner.gameObject.name);
         owner.current_state=owner.patrol_state;
         owner.agent.stoppingDistance=0;
         positioning=false;
@@ -102,27 +103,31 @@ public class PatrolState : IState
         // Now we have the point the soldier needs to patrol, we can start making him go there
         positioning = true;
         owner.agent.destination= patrol_point.position;
+        Debug.Log("Moving to the point (positioning)");
     }
     public void UpdateState()
     {
         //When we get into this function we need to check if the soldier is moving, if he is we should not do anything else
         if (positioning==true){
             //We just check if the soldier is in the patrol point
-            //Debug.Log(owner.gameObject.transform.position+" "+owner.agent.destination);
+            Debug.Log("positioning"+owner.gameObject.name+owner.gameObject.transform.position+" "+owner.agent.destination);
             if (owner.gameObject.transform.position.x==owner.agent.destination.x && owner.gameObject.transform.position.z==owner.agent.destination.z){positioning=false;}
         }  else if (rotating==true){
+            Debug.Log("Rotating is true, positioning is false, rotating"+ owner.defaultLook+owner.transform.forward);
             //We just need to keep rotating
             var rotation = Quaternion.LookRotation(owner.defaultLook);
             owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, rotation, Time.deltaTime * 5);
             //Debug.Log(owner.transform.forward+ owner.defaultLook);
             if (owner.transform.forward==owner.defaultLook){
-                //If we are looking at the street already we can observe it.
+                //If we are looking at the street already we can observe it.\
+                Debug.Log("Exit the patrol");
                 owner.statemachine.ChangeState(owner.observe_state);
             }
         } else {
             //once we are at our patrol point we need to:
             // Set the default direction and start observing that direction
             //Debug.Log("a");
+            Debug.Log("Rotate is false and postioning also is");
             switch (patrol_counter%4){
                 case 0:
                     owner.defaultLook=new Vector3(-1, 0, 0);
@@ -145,6 +150,7 @@ public class PatrolState : IState
     }
     public void OnExit()
     {
+        Debug.Log("Exiting patrol");
         positioning=false;
         rotating = false;
         patrol_counter++;
@@ -161,6 +167,7 @@ public class ObserveState : IState
     float target_distance;
     public void OnEnter()
     {
+        Debug.Log("Observe state "+owner.gameObject.name);
         // "No enemies on my line of sight sir"
         //Debug.Log("b");
     }
@@ -359,12 +366,15 @@ public class Soldierscript : MonoBehaviour
             Shoot();
         }
         */
-        if (follow==true){
+        
+        if (follow==true && statemachine.currentState!=follow_state){
             //We change the current status
             statemachine.ChangeState(follow_state);
-        } else {
+            
+        } else if (statemachine.currentState!=patrol_state) {
             statemachine.ChangeState(patrol_state);
         }
+        
     }
 
 

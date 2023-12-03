@@ -19,6 +19,9 @@ public class CommanderScript : MonoBehaviour
     public Camera Camera2;
     public Camera Camera3;
     public Camera Camera4;
+    
+    public GameObject move_pointer;
+    
 
     // Use this for initialization
     void Start()
@@ -72,6 +75,8 @@ public class CommanderScript : MonoBehaviour
         soldier.GetComponent<Soldierscript>().follow=!soldier.GetComponent<Soldierscript>().follow;
     }
 
+
+
     public void Move()
     {
         //work in progress
@@ -84,22 +89,21 @@ public class CommanderScript : MonoBehaviour
             Debug.Log(hitInfo.transform.name + hitInfo.transform.position);
             var localHit = transform.InverseTransformPoint(hitInfo.point);
             Debug.Log("Plane point:"+localHit); 
+            /*
             if (hitInfo.transform.name=="Floor"){
                 //We are touching the floor and therefore we can move there
                 agent.destination=hitInfo.point;
-            }
+            } 
+            */
+            agent.destination=hitInfo.point;
         }
     }
-    void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Entered collision with " + collision.gameObject.name);
-    }
+    
 
     Vector3 DodgeZombies(){
         LayerMask zombieMask = LayerMask.GetMask("Zombie", "Walls");
-        Collider[] zombies = Physics.OverlapSphere(transform.position, 10, zombieMask);
+        Collider[] zombies = Physics.OverlapSphere(transform.position, 30, zombieMask);
         Vector3 dodgeVector= Vector3.zero;
-        Debug.Log(zombies);
         foreach(var zombi in zombies){
             Vector3 avoidVector= transform.position-zombi.transform.position;
             dodgeVector=dodgeVector+(avoidVector.normalized/avoidVector.magnitude);
