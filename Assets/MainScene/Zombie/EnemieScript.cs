@@ -53,6 +53,10 @@ public class ChaseState : IState
             owner.statemachine.ChangeState(new IDLEState(owner));
         } else {
             Vector3 direction = owner.objective.transform.position-owner.transform.position;
+            //We need to check if the objective is that close that they are within attack range (colliders don't work)
+            if (direction.magnitude<2){
+                Debug.Log("atacked");
+            }
             if (Physics.Raycast(owner.transform.position, direction, out hitInfo, owner.visionrange))
         {
             //Debug.Log(hitInfo.transform.gameObject);
