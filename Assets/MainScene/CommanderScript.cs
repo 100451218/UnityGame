@@ -18,7 +18,7 @@ public class CommanderScript : MonoBehaviour
     public Camera Camera1;
     public Camera Camera2;
     public Camera Camera3;
-    public Camera Camera4;
+    
     
     public GameObject move_pointer;
     
@@ -31,42 +31,37 @@ public class CommanderScript : MonoBehaviour
         Commander.enabled= true;
         Camera1.enabled = false;
         Camera2.enabled = false;
-        Camera4.enabled = false;
+       
     }
     public void SwitchMainCamera(){
         Camera3.enabled = false;
         Commander.enabled= true;
         Camera1.enabled = false;
         Camera2.enabled = false;
-        Camera4.enabled = false;
     }
     public void SwitchTimCamera(){
         Camera3.enabled = true;
         Commander.enabled= false;
         Camera1.enabled = false;
         Camera2.enabled = false;
-        Camera4.enabled = false;
     }
     public void SwitchBobCamera(){
         Camera3.enabled = false;
         Commander.enabled= false;
         Camera1.enabled = true;
         Camera2.enabled = false;
-        Camera4.enabled = false;
     }
     public void SwitchSamCamera(){
         Camera3.enabled = false;
         Commander.enabled= false;
         Camera1.enabled = false;
         Camera2.enabled = true;
-        Camera4.enabled = false;
     }
     public void SwitchUAVCamera(){
         Camera3.enabled = false;
         Commander.enabled= false;
         Camera1.enabled = false;
         Camera2.enabled = false;
-        Camera4.enabled = true;
     }
 
     public void MoveSoldier(string soldier_name){

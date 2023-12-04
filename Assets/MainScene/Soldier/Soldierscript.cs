@@ -218,15 +218,20 @@ public class AimState : IState
         //Debug.Log("Aim state update");
         
         // "The enemy is moving, I'll keep watching him"
-        (target, target_distance)=owner.ClosestEnemy();
-        var rotation = Quaternion.LookRotation(target.transform.position - owner.transform.position);
-        owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, rotation, Time.deltaTime * 5);
+        if (owner.current_bullets<0){
+            owner.statemachine.ChangeState(owner.reload_state);
+        } else{
+            (target, target_distance)=owner.ClosestEnemy();
+            var rotation = Quaternion.LookRotation(target.transform.position - owner.transform.position);
+            owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, rotation, Time.deltaTime * 8);
 
-        target.GetComponent<MeshRenderer>().material = owner.looked;
+            target.GetComponent<MeshRenderer>().material = owner.looked;
 
-        if (target_distance<owner.shootrange){
-            owner.statemachine.ChangeState(owner.shoot_state);
+            if (target_distance<owner.shootrange && Vector3.Angle(target.transform.position-owner.transform.position, owner.transform.forward)<7){
+                owner.statemachine.ChangeState(owner.shoot_state);
+            }
         }
+        
         
     }
     public void OnExit()
@@ -254,6 +259,7 @@ public class ShootState : IState
     public void OnExit()
     {
         // "Few, that was close"
+        owner.current_bullets--;
     }
 }
 
@@ -432,6 +438,7 @@ public class Soldierscript : MonoBehaviour
         
         if (Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, lookrange))
         {
+            Debug.Log(hitInfo.transform.gameObject);
             if (hitInfo.transform.gameObject.tag=="Enemie"){
                 
                 Destroy(hitInfo.transform.gameObject);     

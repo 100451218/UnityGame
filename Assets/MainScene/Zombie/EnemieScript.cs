@@ -129,7 +129,14 @@ public class EnemieScript : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Entered collision with " + collision.gameObject.name);
+        //Debug.Log("Entered collision with " + collision.gameObject.name);
+        if (collision.gameObject.tag=="Civilian"){
+            Destroy(collision.gameObject);
+            agent.speed=agent.speed*2;
+        } else if (collision.gameObject.name=="Commander"){
+            Debug.LogError("Game Over");
+        }
+
     }
 
     // Update is called once per frame

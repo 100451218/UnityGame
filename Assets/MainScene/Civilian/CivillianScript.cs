@@ -39,9 +39,10 @@ public class CivillianScript : MonoBehaviour
             time_left=time_left-Time.deltaTime;
         } else {
             time_left=Random.Range(30f, 90f);
-            Debug.Log("Too far away, time reseted");
+            //Debug.Log("Too far away, time reseted");
         }
         if (time_left<=0){
+            Debug.Log("Civillian saved");
             Destroy(gameObject);
         }
         
