@@ -11,6 +11,10 @@ public class RecordingCanvas : MonoBehaviour
   CommanderScript voice_control;
   void Start()
   {
+    
+
+
+
     voice_control=FindObjectOfType<CommanderScript>();
     if (SpeechRecognizer.ExistsOnDevice())
     {
@@ -35,6 +39,7 @@ public class RecordingCanvas : MonoBehaviour
 
   void Update(){
     //OnStartRecordingPressed();
+    
     if (Vector3.Dot(this.transform.forward, Vector3.down)>0.85)
     {
       //Vector3.Dot is near 1 when the two vectors are similar
@@ -47,6 +52,7 @@ public class RecordingCanvas : MonoBehaviour
   public void OnFinalResult(string result)
   {
     //startRecordingButton.GetComponentInChildren<Text>().text = "Start Recording";
+    Debug.Log("Final result");
     resultText.text = result;
     
     VoiceCommand(result);
@@ -89,6 +95,7 @@ public class RecordingCanvas : MonoBehaviour
   public void OnEndOfSpeech()
   {
     //startRecordingButton.GetComponentInChildren<Text>().text = "Start Recording";
+    Debug.Log("END");
   }
 
   public void OnError(string error)

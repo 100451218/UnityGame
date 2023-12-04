@@ -25,7 +25,7 @@ public class CommanderScript : MonoBehaviour
 
     // Use this for initialization
     void Start()
-    {
+    {   
         agent = GetComponent<NavMeshAgent>();
         Camera3.enabled = false;
         Commander.enabled= true;

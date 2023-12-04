@@ -47,8 +47,13 @@ public class ChaseState : IState
         //The zombie will chase his objective and therefore we need to make it so that he follows the enemie he saw until he looses the line of sight (then he will investigate last known position)
         //We can assume that navmesh make it look towards the objective, therefore we just need to make sure he can see him
         RaycastHit hitInfo;
-        Vector3 direction = owner.objective.transform.position-owner.transform.position;
-        if (Physics.Raycast(owner.transform.position, direction, out hitInfo, owner.visionrange))
+        
+        if (!owner.objective){
+            //Debug.Log("ded");
+            owner.statemachine.ChangeState(new IDLEState(owner));
+        } else {
+            Vector3 direction = owner.objective.transform.position-owner.transform.position;
+            if (Physics.Raycast(owner.transform.position, direction, out hitInfo, owner.visionrange))
         {
             //Debug.Log(hitInfo.transform.gameObject);
             if (hitInfo.transform.gameObject.tag=="Buildings"){
@@ -60,6 +65,9 @@ public class ChaseState : IState
             }
             // If he is still can see the enemie then we need to maintain the target
         }
+        }
+        
+        
     }
     public void OnExit(){}
 }
