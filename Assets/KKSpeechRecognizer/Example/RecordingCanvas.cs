@@ -6,15 +6,14 @@ using KKSpeech;
 public class RecordingCanvas : MonoBehaviour
 {
   //public Button startRecordingButton;
+  private bool only_one_call=true;
+  //Created because the speech to text has started to malfunction for no reason and calls 4 times
   public Text resultText;
   private float waiter=0f;
   CommanderScript voice_control;
   void Start()
   {
     
-
-
-
     voice_control=FindObjectOfType<CommanderScript>();
     if (SpeechRecognizer.ExistsOnDevice())
     {
@@ -44,6 +43,8 @@ public class RecordingCanvas : MonoBehaviour
     {
       //Vector3.Dot is near 1 when the two vectors are similar
       //Therefore, when we look down, we get the Recording
+      Debug.Log("WAAAAAAAAA");
+      
       OnContinuousRecording();
     }
     
@@ -54,15 +55,17 @@ public class RecordingCanvas : MonoBehaviour
     //startRecordingButton.GetComponentInChildren<Text>().text = "Start Recording";
     Debug.Log("Final result");
     resultText.text = result;
+    if (only_one_call==true){
+      VoiceCommand(result);
+      only_one_call=false;
+    }
     
-    VoiceCommand(result);
     //startRecordingButton.enabled = true;
   }
 
   public void OnPartialResult(string result)
   {
     resultText.text = result;
-
   }
 
   public void OnAvailabilityChange(bool available)  
@@ -102,6 +105,7 @@ public class RecordingCanvas : MonoBehaviour
   {
     //startRecordingButton.GetComponentInChildren<Text>().text = "Start Recording";
     //startRecordingButton.enabled = true;
+    Debug.Log("Speech Recognition Error: " + error);
   }
 
   public void OnStartRecordingPressed()
@@ -131,13 +135,15 @@ public class RecordingCanvas : MonoBehaviour
   {
     if (!SpeechRecognizer.IsRecording())
     {
-      //Debug.Log("Not recording");
+      only_one_call=true;
+      Debug.Log("not recording");
       SpeechRecognizer.StartRecording(true);
       resultText.text = "Taking notes!";
     }
     
   }
   void VoiceCommand(string result){
+    Debug.Log("Call");
     switch (result){
       case "camera zero":
         voice_control.SwitchMainCamera();

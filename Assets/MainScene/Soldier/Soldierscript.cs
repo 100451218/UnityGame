@@ -224,7 +224,7 @@ public class AimState : IState
             (target, target_distance)=owner.ClosestEnemy();
             var rotation = Quaternion.LookRotation(target.transform.position - owner.transform.position);
             owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, rotation, Time.deltaTime * 10);
-            Debug.Log(target.transform.position);
+            //Debug.Log(target.transform.position);
             target.GetComponent<MeshRenderer>().material = owner.looked;
 
             if (target_distance<owner.shootrange && Vector3.Angle(target.transform.position-owner.transform.position, owner.transform.forward)<7){
@@ -376,11 +376,13 @@ public class Soldierscript : MonoBehaviour
             Shoot();
         }
         */
-        
+        //Debug.Log("Follow value: "+follow);
         if (follow==true && current_state!=follow_state){
             //We change the current status
+            Debug.Log("banana");
             current_state=follow_state;
             statemachine.ChangeState(follow_state);
+            Debug.Log("banana");
             
         } else if (follow==false && current_state!=patrol_state) {
             //If you are not following and you are currently not patrolling
@@ -441,7 +443,7 @@ public class Soldierscript : MonoBehaviour
         {
             Debug.DrawRay(this.transform.position, this.transform.forward*10000, Color.yellow);
             Debug.DrawLine(this.transform.position, this.transform.forward, Color.yellow, 5f);
-            Debug.Log("Shooter position"+this.transform.position+""+hitInfo.transform.gameObject);
+            //Debug.Log("Shooter position"+this.transform.position+""+hitInfo.transform.gameObject);
             if (hitInfo.transform.gameObject.tag=="Enemie"){
                 current_bullets--;
                 Destroy(hitInfo.transform.gameObject);     

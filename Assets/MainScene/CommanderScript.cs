@@ -66,8 +66,9 @@ public class CommanderScript : MonoBehaviour
 
     public void MoveSoldier(string soldier_name){
         GameObject soldier = GameObject.Find(soldier_name);
-        Debug.Log(soldier);
+        Debug.Log(soldier.name+soldier.GetComponent<Soldierscript>().follow);
         soldier.GetComponent<Soldierscript>().follow=!soldier.GetComponent<Soldierscript>().follow;
+        Debug.Log(soldier.name+soldier.GetComponent<Soldierscript>().follow);
     }
 
 

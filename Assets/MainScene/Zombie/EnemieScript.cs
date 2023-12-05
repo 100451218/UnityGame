@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class IDLEState : IState
 {
@@ -56,9 +57,14 @@ public class ChaseState : IState
             //We need to check if the objective is that close that they are within attack range (colliders don't work)
             if (direction.magnitude<2){
                 Debug.Log("atacked");
-                GameObject.Destroy(owner.objective);
-                //Kill the civilian, buff the zombie
-                owner.agent.speed=owner.agent.speed*1.5;
+                if (owner.objective.name=="Commander"){
+                    SceneManager.LoadScene(sceneName: "Main");
+                } else {
+                    GameObject.Destroy(owner.objective);
+                    //Kill the civilian, buff the zombie
+                    owner.agent.speed=owner.agent.speed*1.5f;
+                }
+                
             }
             if (Physics.Raycast(owner.transform.position, direction, out hitInfo, owner.visionrange))
         {
