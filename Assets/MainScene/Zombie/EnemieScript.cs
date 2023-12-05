@@ -56,6 +56,9 @@ public class ChaseState : IState
             //We need to check if the objective is that close that they are within attack range (colliders don't work)
             if (direction.magnitude<2){
                 Debug.Log("atacked");
+                GameObject.Destroy(owner.objective);
+                //Kill the civilian, buff the zombie
+                owner.agent.speed=owner.agent.speed*1.5;
             }
             if (Physics.Raycast(owner.transform.position, direction, out hitInfo, owner.visionrange))
         {

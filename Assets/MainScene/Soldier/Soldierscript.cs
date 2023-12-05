@@ -223,8 +223,8 @@ public class AimState : IState
         } else{
             (target, target_distance)=owner.ClosestEnemy();
             var rotation = Quaternion.LookRotation(target.transform.position - owner.transform.position);
-            owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, rotation, Time.deltaTime * 8);
-
+            owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, rotation, Time.deltaTime * 10);
+            Debug.Log(target.transform.position);
             target.GetComponent<MeshRenderer>().material = owner.looked;
 
             if (target_distance<owner.shootrange && Vector3.Angle(target.transform.position-owner.transform.position, owner.transform.forward)<7){
@@ -259,7 +259,7 @@ public class ShootState : IState
     public void OnExit()
     {
         // "Few, that was close"
-        owner.current_bullets--;
+        //owner.current_bullets--;
     }
 }
 
@@ -415,6 +415,7 @@ public class Soldierscript : MonoBehaviour
                 distance = currentDistance;
             }
         }
+        //Debug.Log(closest.transform.position);
         //Debug.Log("papagayo"+closest+distance);
         return (closest, distance);
     }
@@ -438,9 +439,11 @@ public class Soldierscript : MonoBehaviour
         
         if (Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, lookrange))
         {
-            Debug.Log(hitInfo.transform.gameObject);
+            Debug.DrawRay(this.transform.position, this.transform.forward*10000, Color.yellow);
+            Debug.DrawLine(this.transform.position, this.transform.forward, Color.yellow, 5f);
+            Debug.Log("Shooter position"+this.transform.position+""+hitInfo.transform.gameObject);
             if (hitInfo.transform.gameObject.tag=="Enemie"){
-                
+                current_bullets--;
                 Destroy(hitInfo.transform.gameObject);     
             }
             // Additional hit effects can be implemented here
