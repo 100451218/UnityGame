@@ -43,7 +43,7 @@ public class RecordingCanvas : MonoBehaviour
     {
       //Vector3.Dot is near 1 when the two vectors are similar
       //Therefore, when we look down, we get the Recording
-      Debug.Log("WAAAAAAAAA");
+     //Debug.Log("WAAAAAAAAA");
       
       OnContinuousRecording();
     }
@@ -53,7 +53,7 @@ public class RecordingCanvas : MonoBehaviour
   public void OnFinalResult(string result)
   {
     //startRecordingButton.GetComponentInChildren<Text>().text = "Start Recording";
-    Debug.Log("Final result");
+   //Debug.Log("Final result");
     resultText.text = result;
     if (only_one_call==true){
       VoiceCommand(result);
@@ -98,14 +98,14 @@ public class RecordingCanvas : MonoBehaviour
   public void OnEndOfSpeech()
   {
     //startRecordingButton.GetComponentInChildren<Text>().text = "Start Recording";
-    Debug.Log("END");
+   //Debug.Log("END");
   }
 
   public void OnError(string error)
   {
     //startRecordingButton.GetComponentInChildren<Text>().text = "Start Recording";
     //startRecordingButton.enabled = true;
-    Debug.Log("Speech Recognition Error: " + error);
+   //Debug.Log("Speech Recognition Error: " + error);
   }
 
   public void OnStartRecordingPressed()
@@ -136,14 +136,14 @@ public class RecordingCanvas : MonoBehaviour
     if (!SpeechRecognizer.IsRecording())
     {
       only_one_call=true;
-      Debug.Log("not recording");
+     //Debug.Log("not recording");
       SpeechRecognizer.StartRecording(true);
       resultText.text = "Taking notes!";
     }
     
   }
   void VoiceCommand(string result){
-    Debug.Log("Call");
+   //Debug.Log("Call");
     switch (result){
       case "camera zero":
         voice_control.SwitchMainCamera();

@@ -88,6 +88,7 @@ public class PatrolState : IState
         positioning=false;
         rotating= false;
         //first we get all the spawn points
+        /*
         Transform points = GameObject.Find("CivilianSpawnerControl").transform;
         foreach (Transform point in points)
         {
@@ -104,15 +105,16 @@ public class PatrolState : IState
         positioning = true;
         owner.agent.destination= patrol_point.position;
         //Debug.Log("Moving to the point (positioning)");
+        */
     }
     public void UpdateState()
     {
         //When we get into this function we need to check if the soldier is moving, if he is we should not do anything else
-        if (positioning==true){
+        /*if (positioning==true){
             //We just check if the soldier is in the patrol point
             //Debug.Log("positioning"+owner.gameObject.name+owner.gameObject.transform.position+" "+owner.agent.destination);
             if (owner.gameObject.transform.position.x==owner.agent.destination.x && owner.gameObject.transform.position.z==owner.agent.destination.z){positioning=false;}
-        }  else if (rotating==true){
+        }  else*/ if (rotating==true){
             //Debug.Log("Rotating is true, positioning is false, rotating"+ owner.defaultLook+owner.transform.forward);
             //We just need to keep rotating
             var rotation = Quaternion.LookRotation(owner.defaultLook);
@@ -379,11 +381,8 @@ public class Soldierscript : MonoBehaviour
         //Debug.Log("Follow value: "+follow);
         if (follow==true && current_state!=follow_state){
             //We change the current status
-            Debug.Log("banana");
             current_state=follow_state;
-            statemachine.ChangeState(follow_state);
-            Debug.Log("banana");
-            
+            statemachine.ChangeState(follow_state); 
         } else if (follow==false && current_state!=patrol_state) {
             //If you are not following and you are currently not patrolling
             current_state=patrol_state;
