@@ -31,7 +31,7 @@ public class CivillianScript : MonoBehaviour
         bool close = false;
         foreach(GameObject soldier in soldiers){
             Vector3 distance = soldier.transform.position-gameObject.transform.position;
-            if (distance.sqrMagnitude<20){
+            if (distance.sqrMagnitude<30){
                 close = true;
             }
         }
