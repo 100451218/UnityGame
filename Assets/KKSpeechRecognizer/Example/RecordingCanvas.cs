@@ -6,9 +6,13 @@ using KKSpeech;
 public class RecordingCanvas : MonoBehaviour
 {
   //public Button startRecordingButton;
-  private bool only_one_call=true;
+  
+  private bool Tim=false;
+  private bool Sam=false;
+  private bool Bob=false;
   //Created because the speech to text has started to malfunction for no reason and calls 4 times
   public Text resultText;
+  public Text soldier_status;
   private float waiter=0f;
   CommanderScript voice_control;
   void Start()
@@ -38,7 +42,26 @@ public class RecordingCanvas : MonoBehaviour
 
   void Update(){
     //OnStartRecordingPressed();
-    
+    //Debug.Log(this.gameObject.transform.parent.transform.parent.parent);
+    string temp1;
+    string temp2;
+    string temp3;
+    if (Tim==false){
+      temp1="<color=teal>Tim</color>: <color=red>patrol</color>";
+    } else{
+      temp1="<color=teal>Tim</color>: <color=green>following</color>";
+    }
+    if (Sam==false){
+      temp2="<color=maroon>\nSam</color>: <color=red>patrol</color>";
+    } else{
+      temp2="<color=maroon>\nSam</color>: <color=green>following</color>";
+    }
+    if (Bob==false){
+      temp3="<color=orange>\nBob</color>: <color=red>patrol</color>";
+    } else{
+      temp3="<color=orange>\nBob</color>: <color=green>following</color>";
+    }
+    soldier_status.text=temp1+temp2+temp3;
     if (Vector3.Dot(this.transform.forward, Vector3.down)>0.85)
     {
       //Vector3.Dot is near 1 when the two vectors are similar
@@ -55,10 +78,13 @@ public class RecordingCanvas : MonoBehaviour
     //startRecordingButton.GetComponentInChildren<Text>().text = "Start Recording";
    //Debug.Log("Final result");
     resultText.text = result;
-    if (only_one_call==true){
+    Debug.Log(this.gameObject.transform.parent.transform.parent.parent.gameObject.name);
+    if (this.gameObject.transform.parent.transform.parent.parent.gameObject.name=="Commander"){
+      //Even if it is not the active camera, all soldiers have a speech to text so we only act "as the commander"
       VoiceCommand(result);
-      only_one_call=false;
     }
+    
+    
     
     //startRecordingButton.enabled = true;
   }
@@ -135,7 +161,7 @@ public class RecordingCanvas : MonoBehaviour
   {
     if (!SpeechRecognizer.IsRecording())
     {
-      only_one_call=true;
+      
      //Debug.Log("not recording");
       SpeechRecognizer.StartRecording(true);
       resultText.text = "Taking notes!";
@@ -143,8 +169,10 @@ public class RecordingCanvas : MonoBehaviour
     
   }
   void VoiceCommand(string result){
-   //Debug.Log("Call");
+   Debug.Log("Call");
     switch (result){
+      case "camera Zero":
+      case "cero":
       case "camera zero":
         voice_control.SwitchMainCamera();
         break;
@@ -163,12 +191,19 @@ public class RecordingCanvas : MonoBehaviour
         break;
       case "Timmy":
         voice_control.MoveSoldier("Tim");
+        Tim=!Tim;
         break;
+      case "Bob":
+      case "Bobby":
       case "Bobby come here":
         voice_control.MoveSoldier("Bob");
+        Bob=!Bob;
         break;
+      case "Sam":
+      case "Sammy":
       case "Sam come here":
         voice_control.MoveSoldier("Sam");
+        Sam=!Sam;
         break;
       case "walk":
       case "move":
