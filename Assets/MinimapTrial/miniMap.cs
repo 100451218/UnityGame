@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class miniMap : MonoBehaviour {
 	public Vector3 fixedPosition = new Vector3(-1200, 200f,-48.7f);
@@ -9,14 +8,12 @@ public class miniMap : MonoBehaviour {
 
     void LateUpdate()
     {
-		Debug.Log(fixedPosition);
+		//Debug.Log(fixedPosition);
         // Keep the camera's position fixed
         gameObject.transform.position = fixedPosition;
-		Debug.Log(gameObject.transform.position+ ""+ gameObject.name);
+		//Debug.Log(gameObject.transform.position+ ""+ gameObject.name);
         // Set the camera's rotation to a fixed value
         gameObject.transform.rotation = Quaternion.Euler(fixedRotation);
     }
-	void Update(){
-		Debug.Log(gameObject.transform.position+ ""+ gameObject.name);
-	}
+	 
 }
