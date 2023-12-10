@@ -99,6 +99,9 @@ public class InvestigateState : IState
     {
         //We won't keep updating the zombie target position as the last one seen was the one he is currently going at
         //Because he no longer has an actual objective to chase, if he sees/hears something he will go there instead
+        if (owner.transform.position==owner.agent.destination){
+            owner.statemachine.ChangeState(new IDLEState(owner));
+        }
         if (owner.Detect()){
             //if the zombie detects another enemie (sees him) he will chase that enemie rather than investigating
             owner.statemachine.ChangeState(new ChaseState(owner));
@@ -122,6 +125,7 @@ public class EnemieScript : MonoBehaviour
     public Material chasing_mat;
     public Material idle_mat;
     public Material investigate_mat;
+    
     public StateMachine statemachine = new StateMachine();
     GameObject commander;
     public NavMeshAgent agent;
@@ -131,6 +135,7 @@ public class EnemieScript : MonoBehaviour
     void Start()
     {
         //Only if he hears something
+        GetComponent<AudioSource>().Play();
         commander = GameObject.FindWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
         statemachine.ChangeState(new IDLEState(this));

@@ -311,6 +311,7 @@ public class Soldierscript : MonoBehaviour
 {
     public StateMachine statemachine = new StateMachine();
 
+    public LayerMask ignoreRaycast;
     public ObserveState observe_state;
     public  AimState aim_state;
     public ShootState shoot_state;
@@ -438,7 +439,7 @@ public class Soldierscript : MonoBehaviour
         //Transform.RotateTowards would be
         RaycastHit hitInfo;
         
-        if (Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, lookrange))
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, lookrange, ~ignoreRaycast))
         {
             Debug.DrawRay(this.transform.position, this.transform.forward*10000, Color.yellow);
             Debug.DrawLine(this.transform.position, this.transform.forward, Color.yellow, 5f);

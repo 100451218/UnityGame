@@ -78,7 +78,7 @@ public class CommanderScript : MonoBehaviour
         //work in progress
         RaycastHit hitInfo;
         Camera observing_point=Camera.main;
-        Debug.Log("AAAAAAAAAA");
+        //Debug.Log("AAAAAAAAAA");
         if (Physics.Raycast(observing_point.transform.position, observing_point.transform.forward, out hitInfo, 10000))
         {   
             //remember that the camera raycast is not fully front so maybe try to use a game object atached to the camera (an empty)

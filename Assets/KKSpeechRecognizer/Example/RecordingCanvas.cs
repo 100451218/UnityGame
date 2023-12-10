@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using KKSpeech;
+using UnityEngine.SceneManagement;
 
 public class RecordingCanvas : MonoBehaviour
 {
@@ -189,6 +190,13 @@ public class RecordingCanvas : MonoBehaviour
       case "camera four":
         voice_control.SwitchUAVCamera();
         break;
+      case "Tim":
+      case "Tim come here":
+      case "Timmy come here":
+      case "Tim follow me":
+      case "Timmy follow me":
+      case "Tim stop":
+      case "Timmy stop":
       case "Timmy":
         voice_control.MoveSoldier("Tim");
         Tim=!Tim;
@@ -208,6 +216,10 @@ public class RecordingCanvas : MonoBehaviour
       case "walk":
       case "move":
         voice_control.Move();
+        break;
+      case "exit":
+      case "Exit":
+        SceneManager.LoadScene(sceneName: "Main");
         break;
       default:
         //Debug.Log("Command not in the options");

@@ -39,16 +39,30 @@ public class SampleScene : MonoBehaviour
             GetComponent<Renderer>().material.color = Color.black;
             switch (this.gameObject.name)
             {
-                case "PlayButton":
-                    PlayButton();   
+                case "Game1":
+                    Game1Button();   
+                    break;
+                case "Game2":
+                    Game2Button();
+                    break;
+                case "GameTutorial":
+                    TutorialButton();
                     break;
             }
             
         }
     }
 
-    void PlayButton(){
+    void Game1Button(){
         Debug.Log("Play");
-        SceneManager.LoadScene(sceneName: "MainScene");
+        SceneManager.LoadScene(sceneName: "Game1");
+    }
+    void Game2Button(){
+        Debug.Log("Play");
+        SceneManager.LoadScene(sceneName: "Game2");
+    }
+    void TutorialButton(){
+        Debug.Log("Play");
+        SceneManager.LoadScene(sceneName: "Tutorial");
     }
 }
