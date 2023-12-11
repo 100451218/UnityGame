@@ -85,13 +85,50 @@ public class CommanderScript : MonoBehaviour
             Debug.Log(hitInfo.transform.name + hitInfo.transform.position);
             var localHit = transform.InverseTransformPoint(hitInfo.point);
             Debug.Log("Plane point:"+localHit); 
+            if (hitInfo.transform.name=="MinimapCanvas"){
+                //if it is the minimap, we need to change the point to an actual point
+                Vector3 canvas_transform = hitInfo.transform.InverseTransformPoint(hitInfo.point);
+                //Now we have the local position the user wants to go, we need to inverse that position to the real worlds
+                Vector2 local_position= new Vector2(canvas_transform.x, canvas_transform.z);
+                
+                Transform origin = GameObject.Find("origin").transform;
+                Transform final = GameObject.Find("final").transform;
+                Vector3 distance_relative = origin.InverseTransformPoint(final.position);
+                
+                float x_ratio= Mathf.Abs((300)/(distance_relative.x));
+                local_position=local_position/x_ratio;
+                //local_position would be the quivalent of distance relative in the Pointers.cs code, it is the distance of the real point to the origin
+                Vector3 real_position = origin.TransformPoint(local_position);
+                real_position= new Vector3(real_position.x+150f, real_position.y-1f, real_position.z-150);
+                Debug.Log("final position "+ real_position);
+
+                agent.destination=real_position;
+                
+                /*
+                Transform origin = GameObject.Find("origin").transform;
+                Transform final = GameObject.Find("final").transform;
+                Vector3 distance_relative = origin.InverseTransformPoint(final.position);
+                float x_ratio= Mathf.Abs((300)/(distance_relative.x));
+                float y_ratio= Mathf.Abs((300)/(distance_relative.z));
+                RectTransform canvasRect = hitInfo.transform.gameObject.GetComponent<RectTransform>();
+                var local_hit= canvasRect.transform.InverseTransformPoint(canvas_transform);
+                Debug.Log("Corners transformed"+(v[0]/x_ratio)+" "+(v[2]/y_ratio));
+                Debug.Log("local hit: "+ local_hit);
+                Debug.Log("Alledged global positon of 300 300"+ canvasRect.transform.TransformPoint(new Vector3(300, -300)));
+                Debug.Log("Global position with ratios divided"+ (canvasRect.transform.TransformPoint(new Vector3(300, -300))/x_ratio));
+                
+                Debug.Log("Vector3 canvas transform "+ canvas_transform);
+                */
+            } else {
+                agent.destination=hitInfo.point;
+            }
             /*
             if (hitInfo.transform.name=="Floor"){
                 //We are touching the floor and therefore we can move there
                 agent.destination=hitInfo.point;
             } 
             */
-            agent.destination=hitInfo.point;
+            
         }
     }
     

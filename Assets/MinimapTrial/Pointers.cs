@@ -24,14 +24,14 @@ public class Pointers : MonoBehaviour
         Vector3 [] v = new Vector3[4];
         //puede que sea con 300 en vez de lo de v[0]], v[3]
         canvasRectTransform.GetWorldCorners(v);
-        Debug.Log(canvasRectTransform.gameObject.name+" "+v[0]+" "+v[1]+" "+v[2]+" "+v[3]);
+         //Debug.Log(canvasRectTransform.gameObject.name+" "+v[0]+" "+v[1]+" "+v[2]+" "+v[3]);
 
         x_ratio= Mathf.Abs((v[0].x-v[2].x)/(distance_relative.x));
         y_ratio= Mathf.Abs((v[0].z-v[2].z)/(distance_relative.z));
 
         x_ratio= Mathf.Abs((300)/(distance_relative.x));
         y_ratio= Mathf.Abs((300)/(distance_relative.z));
-        Debug.Log((distance_relative, x_ratio, y_ratio));
+         // //Debug.Log((distance_relative, x_ratio, y_ratio));
     }
         
     
@@ -42,7 +42,7 @@ public class Pointers : MonoBehaviour
         GameObject[] civillians = GameObject.FindGameObjectsWithTag("Civilian");
         GameObject[] civillian_markers = GameObject.FindGameObjectsWithTag("Civillian spawn");
         Vector3 position;
-        Debug.Log(enemies);
+         //Debug.Log(enemies);
         //First we delete all the icons of the enemies
         foreach(Transform delete_image in transform){
             GameObject.Destroy(delete_image.gameObject);
@@ -53,9 +53,9 @@ public class Pointers : MonoBehaviour
             //Part 0, get canvas data.
             Vector3 [] v = new Vector3[4];
             canvasRectTransform.GetWorldCorners(v);
-            //Debug.Log(canvasRectTransform.gameObject.name+" "+v[0]+" "+v[1]+" "+v[2]+" "+v[3]);
+            // //Debug.Log(canvasRectTransform.gameObject.name+" "+v[0]+" "+v[1]+" "+v[2]+" "+v[3]);
             canvasRectTransform.GetWorldCorners(v);
-            //Debug.Log(canvasRectTransform.gameObject.name+" "+v[0]+" "+v[1]+" "+v[2]+" "+v[3]);
+            // //Debug.Log(canvasRectTransform.gameObject.name+" "+v[0]+" "+v[1]+" "+v[2]+" "+v[3]);
             //Vector3 new_position = new Vector3(v[0].x, v[0].z, v[0].y);
             //Vector3 new_position = new Vector3(0, 0, v[0].y);
 
@@ -66,7 +66,7 @@ public class Pointers : MonoBehaviour
             Vector3 enemy_world_position = enemie.transform.position;
             Vector2 enemy_marker_position = canvasRectTransform.InverseTransformPoint(enemy_world_position);
             //This only gives the distance from the zombie to the canvas rectange origin. What I want is to get 
-            //Debug.Log(enemie.name+"World: "+ enemy_world_position+ "Local1: "+ enemy_marker_position+ "Local2: "+ enemy_marker_position);
+            // //Debug.Log(enemie.name+"World: "+ enemy_world_position+ "Local1: "+ enemy_marker_position+ "Local2: "+ enemy_marker_position);
             //Note: maybe it is needed to invert the y
 
 
@@ -74,12 +74,12 @@ public class Pointers : MonoBehaviour
             
             Vector3 distance_relative = origin.InverseTransformPoint(enemy_world_position);
 
-            Debug.Log("origin coords"+ origin+ " distance from"+enemie.name+":"+distance_relative);
-            Debug.Log("Which is "+ distance_relative.x*x_ratio+" "+distance_relative.z*y_ratio);
+             //Debug.Log("origin coords"+ origin+ " distance from"+enemie.name+":"+distance_relative);
+             //Debug.Log("Which is "+ distance_relative.x*x_ratio+" "+distance_relative.z*y_ratio);
             /*
             Vector3 new_position3=worldCamera.WorldToScreenPoint(enemie.transform.position);
             Vector2 new_position = new Vector2 (new_position3.x, new_position3.z-300 );
-            Debug.Log(enemie.name+"3d"+new_position3+"2d: "+ new_position);
+             //Debug.Log(enemie.name+"3d"+new_position3+"2d: "+ new_position);
 
             */
             //Part3 Get the image of a zombie on the local position. As it is the son the position will be relative.
@@ -91,12 +91,11 @@ public class Pointers : MonoBehaviour
             //Image image2 = Instantiate(imagePrefab, new Vector2(300,-300), Quaternion.identity);
             //image2.transform.SetParent(canvasRectTransform, false);
             //Vector2 canvas_position = 
-            //Debug.Log(enemie.name+""+enemie.transform.position);
+            // //Debug.Log(enemie.name+""+enemie.transform.position);
         }
         foreach (GameObject soldier in soldiers)
         {            
             Vector3 distance_relative = origin.InverseTransformPoint(soldier.transform.position);
-
             Vector2 new_position = new Vector2((distance_relative.x*x_ratio),(distance_relative.z*y_ratio));
             Image image = Instantiate(turretImage, new_position, Quaternion.identity);
             image.transform.SetParent(canvasRectTransform, false);
