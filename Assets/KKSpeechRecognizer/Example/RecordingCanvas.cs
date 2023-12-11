@@ -66,9 +66,7 @@ public class RecordingCanvas : MonoBehaviour
     if (Vector3.Dot(this.transform.forward, Vector3.down)>0.85)
     {
       //Vector3.Dot is near 1 when the two vectors are similar
-      //Therefore, when we look down, we get the Recording
-     //Debug.Log("WAAAAAAAAA");
-      
+      //Therefore, when we look down, we get the Recording      
       OnContinuousRecording();
     }
     
@@ -162,7 +160,6 @@ public class RecordingCanvas : MonoBehaviour
   {
     if (!SpeechRecognizer.IsRecording())
     {
-      
      //Debug.Log("not recording");
       SpeechRecognizer.StartRecording(true);
       resultText.text = "Taking notes!";

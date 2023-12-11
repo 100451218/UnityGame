@@ -270,22 +270,26 @@ public class ReloadState : IState
 {
     Soldierscript owner;
     public ReloadState(Soldierscript owner) { this.owner = owner;}
+    private float counter= 0f;
     public void OnEnter()
     {
-        // "Reloading!"
-        //ChangeState(observe_state);
-        //Debug.Log("Reloading!");
-        owner.current_bullets=owner.max_bullets_cappacity;
-        owner.statemachine.ChangeState(owner.observe_state);
+        
+        owner.current_bullets=0;
+        
     }
     public void UpdateState()
     {
         // "Getting out the chamber, getting in the chamber"
-
+        if (counter <1){
+            counter = counter + Time.deltaTime;
+        } else{
+            owner.statemachine.ChangeState(owner.observe_state);
+        }
     }
     public void OnExit()
     {
         // "locked and loaded"
+        owner.current_bullets=owner.max_bullets_cappacity;
     }
 }
 
