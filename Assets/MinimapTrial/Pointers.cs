@@ -55,33 +55,14 @@ public class Pointers : MonoBehaviour
             canvasRectTransform.GetWorldCorners(v);
             // //Debug.Log(canvasRectTransform.gameObject.name+" "+v[0]+" "+v[1]+" "+v[2]+" "+v[3]);
             canvasRectTransform.GetWorldCorners(v);
-            // //Debug.Log(canvasRectTransform.gameObject.name+" "+v[0]+" "+v[1]+" "+v[2]+" "+v[3]);
-            //Vector3 new_position = new Vector3(v[0].x, v[0].z, v[0].y);
-            //Vector3 new_position = new Vector3(0, 0, v[0].y);
-
-            //Part1 get local position of the zombie from his world position.
-            //Position (0,0) is the local position of the canvas for (0,0) which in the real world is (-81.6, 136) The other corner is (300,-300)
-            // We need to obtain the local position of the zombies given the top left is 0,0.
             
             Vector3 enemy_world_position = enemie.transform.position;
             Vector2 enemy_marker_position = canvasRectTransform.InverseTransformPoint(enemy_world_position);
-            //This only gives the distance from the zombie to the canvas rectange origin. What I want is to get 
-            // //Debug.Log(enemie.name+"World: "+ enemy_world_position+ "Local1: "+ enemy_marker_position+ "Local2: "+ enemy_marker_position);
-            //Note: maybe it is needed to invert the y
+            //This only gives the distance from the zombie to the canvas rectange origin. What I want is to get the distance from origin to the zombie
+            // //Debug.Log(enemie.name+"World: "+ enemy_world_position+ "Local1: "+ enemy_marker_position+ "Local2: "+ enemy_marker_position);        
 
-
-            //Part2 from what the camera sees get what would be the position corresponding the gameobject 
-            
             Vector3 distance_relative = origin.InverseTransformPoint(enemy_world_position);
 
-             //Debug.Log("origin coords"+ origin+ " distance from"+enemie.name+":"+distance_relative);
-             //Debug.Log("Which is "+ distance_relative.x*x_ratio+" "+distance_relative.z*y_ratio);
-            /*
-            Vector3 new_position3=worldCamera.WorldToScreenPoint(enemie.transform.position);
-            Vector2 new_position = new Vector2 (new_position3.x, new_position3.z-300 );
-             //Debug.Log(enemie.name+"3d"+new_position3+"2d: "+ new_position);
-
-            */
             //Part3 Get the image of a zombie on the local position. As it is the son the position will be relative.
             Vector2 new_position = new Vector2((distance_relative.x*x_ratio),(distance_relative.z*y_ratio));
             Image image = Instantiate(zombieImage, new_position, Quaternion.identity);

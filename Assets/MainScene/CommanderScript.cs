@@ -65,6 +65,7 @@ public class CommanderScript : MonoBehaviour
     }
 
     public void MoveSoldier(string soldier_name){
+        //get the soldier and make him change his primary state Patrol/Follow
         GameObject soldier = GameObject.Find(soldier_name);
         Debug.Log(soldier.name+soldier.GetComponent<Soldierscript>().follow);
         soldier.GetComponent<Soldierscript>().follow=!soldier.GetComponent<Soldierscript>().follow;
@@ -75,16 +76,16 @@ public class CommanderScript : MonoBehaviour
 
     public void Move()
     {
-        //work in progress
+        
         RaycastHit hitInfo;
         Camera observing_point=Camera.main;
-        //Debug.Log("AAAAAAAAAA");
+        
         if (Physics.Raycast(observing_point.transform.position, observing_point.transform.forward, out hitInfo, 10000))
         {   
-            //remember that the camera raycast is not fully front so maybe try to use a game object atached to the camera (an empty)
+            //We do a raycast with the active camera
             Debug.Log(hitInfo.transform.name + hitInfo.transform.position);
             var localHit = transform.InverseTransformPoint(hitInfo.point);
-            Debug.Log("Plane point:"+localHit); 
+            
             if (hitInfo.transform.name=="MinimapCanvas"){
                 //if it is the minimap, we need to change the point to an actual point
                 Vector3 canvas_transform = hitInfo.transform.InverseTransformPoint(hitInfo.point);
@@ -104,30 +105,12 @@ public class CommanderScript : MonoBehaviour
 
                 agent.destination=real_position;
                 
-                /*
-                Transform origin = GameObject.Find("origin").transform;
-                Transform final = GameObject.Find("final").transform;
-                Vector3 distance_relative = origin.InverseTransformPoint(final.position);
-                float x_ratio= Mathf.Abs((300)/(distance_relative.x));
-                float y_ratio= Mathf.Abs((300)/(distance_relative.z));
-                RectTransform canvasRect = hitInfo.transform.gameObject.GetComponent<RectTransform>();
-                var local_hit= canvasRect.transform.InverseTransformPoint(canvas_transform);
-                Debug.Log("Corners transformed"+(v[0]/x_ratio)+" "+(v[2]/y_ratio));
-                Debug.Log("local hit: "+ local_hit);
-                Debug.Log("Alledged global positon of 300 300"+ canvasRect.transform.TransformPoint(new Vector3(300, -300)));
-                Debug.Log("Global position with ratios divided"+ (canvasRect.transform.TransformPoint(new Vector3(300, -300))/x_ratio));
-                
-                Debug.Log("Vector3 canvas transform "+ canvas_transform);
-                */
+               
             } else {
+                //If we hit other thing we move that way
                 agent.destination=hitInfo.point;
             }
-            /*
-            if (hitInfo.transform.name=="Floor"){
-                //We are touching the floor and therefore we can move there
-                agent.destination=hitInfo.point;
-            } 
-            */
+            
             
         }
     }
@@ -146,7 +129,7 @@ public class CommanderScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Ai part to prevent the commander to be eated when not moving
         Vector3 desiredV = Vector3.zero;
         if (agent.hasPath){
             desiredV = agent.desiredVelocity;
