@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class RecordingCanvas : MonoBehaviour
 {
-  //public Button startRecordingButton;
-  
+  //We set up the variables 
   private bool Tim=false;
   private bool Sam=false;
   private bool Bob=false;

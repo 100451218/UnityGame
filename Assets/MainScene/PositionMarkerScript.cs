@@ -12,6 +12,7 @@ public class PositionMarkerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Whenever the civilian marker spawns it will wait 15 seconds to destroy himself and spawns the civilian
         counter = counter + Time.deltaTime;
         if (counter>15){
             //If 15 seconds past, spawn the civilian

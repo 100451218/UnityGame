@@ -76,7 +76,7 @@ public class CommanderScript : MonoBehaviour
 
     public void Move()
     {
-        
+        //We get where the player was looking when he executed the move action
         RaycastHit hitInfo;
         Camera observing_point=Camera.main;
         
@@ -107,7 +107,7 @@ public class CommanderScript : MonoBehaviour
                 
                
             } else {
-                //If we hit other thing we move that way
+                //If we hit other thing like the floor we move that way
                 agent.destination=hitInfo.point;
             }
             
@@ -117,6 +117,7 @@ public class CommanderScript : MonoBehaviour
     
 
     Vector3 DodgeZombies(){
+        //Dodge zombies will make the commander to move towards his objective while dodging the zombies and buildings nearby same as the civilian dodge zombies
         LayerMask zombieMask = LayerMask.GetMask("Zombie", "Walls");
         Collider[] zombies = Physics.OverlapSphere(transform.position, 30, zombieMask);
         Vector3 dodgeVector= Vector3.zero;
@@ -133,8 +134,9 @@ public class CommanderScript : MonoBehaviour
         Vector3 desiredV = Vector3.zero;
         if (agent.hasPath){
             desiredV = agent.desiredVelocity;
+            //If he has a path then he has a desired Velocity as he has a destination
         } 
-
+        //Has he an objective or not he needs to be dodging the zombies
         Vector3 survivingV = DodgeZombies();
         desiredV= desiredV+survivingV;
         currentVelocity = Vector3.Lerp(currentVelocity, desiredV, Time.deltaTime);

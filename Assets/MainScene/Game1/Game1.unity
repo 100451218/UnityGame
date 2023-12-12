@@ -547,30 +547,60 @@ PrefabInstance:
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7010976479798132066, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildings
+      objectReference: {fileID: 0}
     - target: {fileID: 3224370214293673922, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3224370214293673922, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildings
       objectReference: {fileID: 0}
     - target: {fileID: 4474595355407588021, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4474595355407588021, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildings
+      objectReference: {fileID: 0}
     - target: {fileID: 3308081735662229609, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308081735662229609, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildings
       objectReference: {fileID: 0}
     - target: {fileID: 7182274605883516716, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7182274605883516716, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildings
+      objectReference: {fileID: 0}
     - target: {fileID: 8155107000683666531, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155107000683666531, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildings
       objectReference: {fileID: 0}
     - target: {fileID: 1591532809514770493, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}
@@ -582,35 +612,70 @@ PrefabInstance:
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8494321835532784962, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildings
+      objectReference: {fileID: 0}
     - target: {fileID: 9183339339339775803, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9183339339339775803, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildings
       objectReference: {fileID: 0}
     - target: {fileID: 4937433385326551157, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4937433385326551157, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildings
+      objectReference: {fileID: 0}
     - target: {fileID: 3038843569262899168, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038843569262899168, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildings
       objectReference: {fileID: 0}
     - target: {fileID: 2021719355143578234, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2021719355143578234, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildings
+      objectReference: {fileID: 0}
     - target: {fileID: 4028879638931592814, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028879638931592814, guid: 9bf570e89e060814db17c50fe0060109,
+        type: 3}
+      propertyPath: m_TagString
+      value: Buildings
+      objectReference: {fileID: 0}
+    - target: {fileID: 9089424231239885684, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9089424231239885684, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
+      propertyPath: m_TagString
+      value: Buildings
       objectReference: {fileID: 0}
     - target: {fileID: 261655724858226219, guid: 9bf570e89e060814db17c50fe0060109,
         type: 3}

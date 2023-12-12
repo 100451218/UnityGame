@@ -6,17 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class IDLEState : IState
 {
+    //The zombie will be wait 6 seconds doing nothing (it would emulate an animation of coming out of the floor)
     EnemieScript owner;
     public IDLEState(EnemieScript owner) { this.owner = owner;}
     float timer=0;
     public void OnEnter()
     {
+        //As we mentioned in soldier code, the material no longer is seen due to the new model but it is still useful for the testing
         owner.gameObject.GetComponent<MeshRenderer>().material= owner.idle_mat;
     }
     public void UpdateState()
     {
         //Debug.Log("IDLE");
         timer = timer+Time.deltaTime;
+        //Once the the timer gets past 6 seconds, we set a random position and make the zombie move there, after 6 seconds he will move to another random position
         if (timer>6){
             //Time to move to a different random position
             float x= owner.transform.position.x+ Random.Range(-20, 20);
@@ -34,7 +37,7 @@ public class IDLEState : IState
 
 public class ChaseState : IState
 {
-    
+    //The zombie is chasing something   
     EnemieScript owner;
     public ChaseState(EnemieScript owner) { this.owner = owner;}
     public void OnEnter()
@@ -43,34 +46,36 @@ public class ChaseState : IState
     }
     public void UpdateState()
     {
-        //Debug.Log("Chasing! "+ owner.objective+owner.objective.name);
         //braaaaiiiiinnnzzzzzs
         //The zombie will chase his objective and therefore we need to make it so that he follows the enemie he saw until he looses the line of sight (then he will investigate last known position)
         //We can assume that navmesh make it look towards the objective, therefore we just need to make sure he can see him
         RaycastHit hitInfo;
         
         if (!owner.objective){
-            //Debug.Log("ded");
+            //If his objective doesn't exist (is dead) and the zombie has seen it then he will go back IDLE
             owner.statemachine.ChangeState(new IDLEState(owner));
         } else {
             Vector3 direction = owner.objective.transform.position-owner.transform.position;
             //We need to check if the objective is that close that they are within attack range (colliders don't work)
             if (direction.magnitude<2){
-                Debug.Log("atacked");
+                //If the objective is too close we can "emulate" the zombie attacks him and kills him
+                //Debug.Log("atacked");
                 if (owner.objective.name=="Commander"){
+                    //if he kills the commande we go back to the menu scene
                     SceneManager.LoadScene(sceneName: "Main");
                 } else {
                     GameObject.Destroy(owner.objective);
-                    //Kill the civilian, buff the zombie
+                    //Kill the civilian, buff the zombie with more speed movement (stackable).
                     owner.agent.speed=owner.agent.speed*1.5f;
                 }
                 
             }
             if (Physics.Raycast(owner.transform.position, direction, out hitInfo, owner.visionrange))
         {
+            //We cast a raycast in the direction of his objective
             //Debug.Log(hitInfo.transform.gameObject);
             if (hitInfo.transform.gameObject.tag=="Buildings"){
-                //He has stoped seeing the enemy
+                //He has stoped seeing the enemy 
                 owner.statemachine.ChangeState(new InvestigateState(owner)); 
             } else {
                 //if he can see him still he will move accordingly
@@ -88,6 +93,7 @@ public class ChaseState : IState
 
 public class InvestigateState : IState
 {
+    //The enemy lost line of sight with his prey so he will go to the last position where he saw her (already loaded as agent destination)
     EnemieScript owner;
     public InvestigateState(EnemieScript owner) { this.owner = owner;}
     public void OnEnter()
@@ -100,20 +106,13 @@ public class InvestigateState : IState
         //We won't keep updating the zombie target position as the last one seen was the one he is currently going at
         //Because he no longer has an actual objective to chase, if he sees/hears something he will go there instead
         if (owner.transform.position==owner.agent.destination){
+            //Once he arrives at the destination he can go back to idle
             owner.statemachine.ChangeState(new IDLEState(owner));
         }
         if (owner.Detect()){
-            //if the zombie detects another enemie (sees him) he will chase that enemie rather than investigating
+            //if the zombie detects another target (sees him) he will chase that enemie rather than investigating
             owner.statemachine.ChangeState(new ChaseState(owner));
-        } /*else if (owner.Hear())
-        {
-            //If the enemy does not see anything he will try to hear something
-            // he will always go to the closest sound 
-            // first we calculate how far is the thing he is investigating
-
-            // second we calculate 
-        }
-        */
+        } 
     }
     public void OnExit(){}
 }
@@ -121,7 +120,7 @@ public class InvestigateState : IState
 
 public class EnemieScript : MonoBehaviour
 {
-    public int visionrange = 10000;
+    public int visionrange = 7000;
     public Material chasing_mat;
     public Material idle_mat;
     public Material investigate_mat;
@@ -134,16 +133,20 @@ public class EnemieScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Only if he hears something
+        //The zombie will be generating sounds to "announce" his presence
         GetComponent<AudioSource>().Play();
         commander = GameObject.FindWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
+        //We start at the idle state
         statemachine.ChangeState(new IDLEState(this));
         //agent.destination= commander.transform.position;
     }
+    /*
+    //For some reason OnCollisionEnter didn't work, with the new zombie model it does work but the other implementation was already working
     void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("Entered collision with " + collision.gameObject.name);
+        
         if (collision.gameObject.tag=="Civilian"){
             Destroy(collision.gameObject);
             agent.speed=agent.speed*2;
@@ -152,6 +155,7 @@ public class EnemieScript : MonoBehaviour
         }
 
     }
+    */
 
     // Update is called once per frame
     void Update()
@@ -161,19 +165,22 @@ public class EnemieScript : MonoBehaviour
     public bool Detect(){
         //This code will detect if the zombie should chase another enemy
         // We need to check if the zombi sees a commander or a civilian
+        //This code works similary than detect target from soldier
         float distance= 10000000000000000000;
         GameObject target_civilian = null;
         //The zombi will go to the closest civilian he sees
         civilians=GameObject.FindGameObjectsWithTag("Civilian");
         if (civilians!= null){
+            //If there is no civillian we get ll the civilians positions and check if the zombie can see him
             foreach(GameObject civilian in civilians){
                 Vector3 direction =civilian.transform.position - gameObject.transform.position;
                 float angle= Vector3.Angle(direction, gameObject.transform.forward);
                 if (angle < 45){
-                    //if he sees him
+                    //if the civilian is within range of vision
                     Vector3 enemie_distance = civilian.transform.position - gameObject.transform.position;
                     float currentDistance = enemie_distance.sqrMagnitude;
-                    if (currentDistance<distance && currentDistance<15000){
+                    if (currentDistance<distance && currentDistance< visionrange ){
+                        //If the civilian is closer than the current closest and it can be seen we save it as the best
                         target_civilian= civilian;
                         distance=currentDistance;
                     }           
@@ -181,6 +188,7 @@ public class EnemieScript : MonoBehaviour
             }
         }
         if (target_civilian != null){
+            //If there is a civilian as an objective we move there and return we have an objective
             agent.destination= target_civilian.transform.position;
             objective= target_civilian;
             return true;
@@ -206,9 +214,11 @@ public class EnemieScript : MonoBehaviour
             }
             //if there is not civilian he sees or the commander is not at sight, simply do nothing
         }
+        //Notice how he doesnt care the commander is closer than a civilian, this is done to make the game easier
         return false;
     }
 
+    /*
     public void Investigate(Vector3 position){
         Debug.Log("Zombi heard something");
     }
@@ -216,4 +226,5 @@ public class EnemieScript : MonoBehaviour
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         agent.destination= commander.transform.position;
     }
+    */
 }
