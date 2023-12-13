@@ -200,7 +200,7 @@ public class EnemieScript : MonoBehaviour
                 //if he is in the angle of seeing him
                 RaycastHit hitInfo;
                 //direction = commander.transform.position-gameObject.transform.position;
-                if (Physics.Raycast(this.transform.position, direction, out hitInfo, 100000))
+                if (Physics.Raycast(this.transform.position, direction, out hitInfo, visionrange))
                 {  
                     //Debug.Log("Checking Dectect "+ hitInfo.transform.gameObject);
                     //Check if it collides with a building

@@ -245,14 +245,13 @@ public class ShootState : IState
     public void OnEnter()
     {
         // "That enemy got too close! Paw! Paw! Paw!"
+    }
+    public void UpdateState()
+    {
         // We call the function to shoot and then we go back observing
         owner.Shoot();
         //optional add of keep shooting if the target is the same
         owner.statemachine.ChangeState(owner.observe_state);
-    }
-    public void UpdateState()
-    {
-        //No update state
     }
     public void OnExit()
     {
