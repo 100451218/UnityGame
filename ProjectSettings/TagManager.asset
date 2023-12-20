@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Allie
+  - Enemie
+  - Civilian
+  - SoldierPosition
+  - Buildings
+  - Minimap
+  - Enemie Part
+  - Civillian spawn
   layers:
   - Default
   - TransparentFX
@@ -14,9 +22,9 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
+  - Zombie
+  - Walls
+  - Minimap
   - 
   - 
   - 
